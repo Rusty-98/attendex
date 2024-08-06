@@ -1,7 +1,7 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-
+import Image from 'next/image';
 import Pagination from '@/components/Pagination';
 import SearchBar from '@/components/SearchBar';
 import TableHeader from '@/components/TableHeader';
@@ -13,22 +13,22 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const itemsPerPage = 10;
-  let cache = [];
+  const cache = useRef([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (cache.length) {
-          setAttendanceData(cache);
+        if (cache.current.length) {
+          setAttendanceData(cache.current);
         } else {
           const response = await axios.get('/api/getData');
-          cache = response.data;
-          setAttendanceData(cache);
+          cache.current = response.data;
+          setAttendanceData(cache.current);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
-        setLoading(false); // Set loading to false after fetching data
+        setLoading(false);
       }
     };
 
@@ -59,7 +59,7 @@ export default function Home() {
         <div className="overflow-x-auto">
           {loading ? (
             <div className="flex items-center justify-center">
-              <img src="/loading.svg" alt="" />
+              <Image src="/loading.svg" alt="Loading" width={300} height={300} />
             </div>
           ) : (
             paginatedData.map((student, index) => (
