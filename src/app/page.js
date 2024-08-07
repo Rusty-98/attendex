@@ -6,6 +6,7 @@ import Pagination from '@/components/Pagination';
 import SearchBar from '@/components/SearchBar';
 import TableHeader from '@/components/TableHeader';
 import TableRow from '@/components/TableRow';
+import Footer from '@/components/Header';
 
 export default function Home() {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -53,7 +54,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 py-5 md:py-10 dark">
-      <div className="max-w-6xl mx-auto bg-gray-800 shadow-md rounded-lg overflow-hidden">
+      <Footer />
+      <div className="max-w-6xl mx-auto bg-gray-800 mt-10 md:mt-5 shadow-md rounded-lg overflow-hidden">
         <h1 className="text-2xl md:text-3xl font-bold text-center py-4 bg-blue-700 text-white">AttendX</h1>
         <SearchBar query={searchQuery} onQueryChange={handleSearchChange} />
         <div className="overflow-x-auto">
