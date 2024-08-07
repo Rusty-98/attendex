@@ -31,7 +31,6 @@ export async function GET() {
       // Extract student name
       const studentName = $('#lblStudentName').text().trim();
 
-      // Extract attendance data
       const attendanceData = [];
       $('#Table1 tbody tr').each((index, element) => {
         const row = $(element);
@@ -61,9 +60,9 @@ export async function GET() {
   }
 
   async function fetchAllAttendanceData() {
-    attendanceRecords = []; // Reset the records
+    attendanceRecords = [];
 
-    for (let i = 220104001; i <= 220104075; i++) {
+    for (let i = 220104001; i <= 220104078; i++) {
       const rollNo = i.toString();
       const data = await fetchAttendanceData(rollNo);
       if (data) {
@@ -71,10 +70,15 @@ export async function GET() {
       }
     }
 
+    const data = await fetchAttendanceData('220108028');
+    if (data) {
+      attendanceRecords.push(data);
+    }
+
     console.log('Attendance data updated:', attendanceRecords.length, 'records');
   }
 
-  await fetchAllAttendanceData(); // Fetch all attendance data
+  await fetchAllAttendanceData();
 
   return new Response(JSON.stringify(attendanceRecords), {
     status: 200,
