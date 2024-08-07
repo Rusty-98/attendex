@@ -63,17 +63,19 @@ export default function Home() {
             </div>
           ) : (
             paginatedData.map((student, index) => (
-              <div key={index} className="p-4 border-b border-gray-700 last:border-none">
-                <h2 className="text-lg md:text-xl font-semibold">{student.studentName}</h2>
-                <table className="min-w-full bg-gray-800 border mt-2">
-                  <TableHeader />
-                  <tbody>
-                    {student.attendanceData.map((record, idx) => (
-                      <TableRow key={idx} record={record} />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              student.attendanceData.length > 0 && (
+                <div key={index} className="p-4 border-b border-gray-700 last:border-none">
+                  <h2 className="text-lg md:text-xl font-semibold">{student.studentName}</h2>
+                  <table className="min-w-full bg-gray-800 border mt-2">
+                    <TableHeader />
+                    <tbody>
+                      {student.attendanceData.map((record, idx) => (
+                        <TableRow key={idx} record={record} />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )
             ))
           )}
         </div>
